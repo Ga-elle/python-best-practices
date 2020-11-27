@@ -62,3 +62,101 @@ lg.basicConfig(level=lg.DEBUG)
 ```
 On peut aussi le mettre en argument (verbose par exemple).
 *Le niveau par défaut de la librairie logging est WARNING.*
+
+
+## Concaténer du texte
+
+Exemple: 
+```
+plt.title("{} ({} MPs)".format(self.name, nb_mps))
+```
+
+
+## Les méthodes spéciales
+
+Les méthodes spéciales commencent et finissent toujours par deux tirets du bas (__). 
+Par exemple, l'instruction `obj[key]` est réalisée grâce à la méthode spéciale `__getitem__()`. Autre exemple: la fonction `len()` appelle `__len__()`.
+
+C'est ces méthodes qui peuvent être réécrites/modifier dans nos scripts.
+``` 
+>>> class Hack:
+...    def __len__(self):
+...    print('Wow, I just hacked python')
+...    return 5
+
+>>> a = Hack()
+>>> print(len(a))
+Wow, I just hacked python
+5
+```
+
+Quelques méthodes spéciales connues: 
+ + Représentation : `__repr__`, `__str__`, `__format__`, `__bytes__`
+ + Conversion en nombre : `__abs__`, `__bool__`, `__complex__`, `__int__`, `__float__`, `__hash__`, `__index__`
+ + Collections : `__len__`, `__getitem__`, `__setitem__`, `__delitem__`, `__contains__`
+ + Itérateurs : `__iter__`, `__reversed__`, `__next__`
+ + Création et destruction d'instances : `__new__`, `__init__`, `__del__`
+ + Gestion des attributs : `__getattr__`, `__getattribute__`, `__setattr__`, `__delattr__`, `__dir__`
+ + Comparaisons : `__lt__<`, `__le__<=`, `__eq__==`, `__ne__!=`, `__gt__>`, `__ge__>=`
+ + Opérateurs arithmétiques : `__add__+`, `__sub__-`, `__mul__*`, `__truediv__/`, `__floordiv__//`, `__mod__%`, `__round__`
+ 
+ 
+## Les décorateurs
+
+Read the tutorial [here](https://openclassrooms.com/fr/courses/4425111-perfectionnez-vous-en-python/4463871-apprivoisez-les-decorateurs)
+
+
+## Les expressions régulières
+
+Dans le cadre de ce projet, on les utilise pour reconnaitre le type de fichier en entrée (csv ou xml) pour éviter de le mettre en argument du script python.
+
+Représentation d'une expression régulière :
+ + `.` représente tout caractère (chiffre, lettre, symbole)
+ + `^` représente le début d'une ligne.
+ + `$` représente la fin d'une ligne. 
+ + `\w` représente un caractère venant d'un mot (a-z, A-Z, 0-9, ou tout caractère unicode)
+ + `\d` représente un chiffre (0-9)
+ 
+Occurence dans une expression régulière : 
+ + `*` aucune ou plusieurs occurences
+ + `+` au moins une occurence 
+ + `[]` au moins un des caractères présents entre crochets
+
+Exemple : 
+ + commence par un C : `^C`
+ + la seconde lettre est "é" : `^Cé`
+ + la troisième lettre est variable : `^Cé.`
+ + la quatrième lettre est un "i" : `^Cé.i`
+ + les lettres suivantes sont des n, e, l, a ou i. Il peut y en avoir plusieurs : `^Cé.i[nelai]+
+ 
+Les parenthèses :
+Permettent de sélectionner uniquement ce qui est entre parenthèses dans un ensemble plus large.
+Exemple : `^C(.{4})e$` renverra les 4 caractères après le C et avant le e.
+
+Avec python : utilisation de la librairie `re`
+
+
+## Itérateur 
+
+```python
+class MyIterator:
+    def __init__(self):
+        print("Je m'initialise à 40")
+        self.i = 40
+
+    def __iter__(self):
+        print("On a appelé __iter__")
+        return self
+
+    def __next__(self):
+        print("On a appelé __next__")
+        self.i += 2
+        if self.i > 56 :
+            raise StopIteration()
+        return self.i
+```
+
+
+## Générateur
+
+Read the tutorial [here](https://openclassrooms.com/fr/courses/4425111-perfectionnez-vous-en-python/4464083-faites-connaissance-avec-les-generateurs-et-les-iterateurs)
